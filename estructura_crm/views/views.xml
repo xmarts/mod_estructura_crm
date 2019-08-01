@@ -52,6 +52,14 @@
                         <field name="function"/>
                         <field name="phone" widget="phone"/>
                         <field name="mobile"/>
+                        <separator string="Tracking"/>
+                        <field name="company_id"
+                                groups="base.group_multi_company"
+                                options="{'no_create': True}"/>
+                        <field name="campaign_id" />
+                        <field name="medium_id"/>
+                        <field name="source_id"/>
+                        <field name="referred"/>
                     </group>
                     <group>
                         <!-- Preload all the partner's information -->
@@ -108,6 +116,20 @@
                 <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
             </div>
         </form>
+        </xpath>
+        <xpath expr="//page[@name='extra']" position="replace">
+            <page name="extra" string="Extra Info">
+                <group>
+                    <group string="Email" groups="base.group_no_one">
+                        <field name="message_bounce" readonly="1"/>
+                    </group>
+                    <group string="Analysis" groups="base.group_no_one">
+                        <field name="date_open"/>
+                        <field name="date_closed"/>
+                        <field name="probability"/>
+                    </group>
+                </group>
+            </page>
         </xpath>
       </field>
     </record>
