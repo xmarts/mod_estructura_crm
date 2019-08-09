@@ -170,8 +170,8 @@
                 <field name="create_date" string="Fecha de lead"/>
                 <field name="name" string="Tipo de proyecto"/>
                 <field name="user_id" string="Asesor"/>
-                <field name="company_id" string="Empresa"/>
-                <field name="contact_name"/>
+                <field name="partner_name" string="Empresa"/>
+                <field name="contact_name" string="Contacto"/>
                 <field name="city"/>
                 <field name="state_id" string="Estado"/>
                 <field name="country_id"/>
@@ -180,6 +180,7 @@
                 <field name="user_id" invisible="1"/>
                 <field name="partner_id" invisible="1"/>
                 <field name="team_id"/>
+                <field name="team_id" string="Oficina de contacto"/>
                 <field name="active" invisible="1"/>
                 <field name="probability" invisible="1"/>
                 <field name="campaign_id" invisible="1"/>
