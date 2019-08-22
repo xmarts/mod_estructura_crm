@@ -224,6 +224,9 @@
             <xpath expr="//field[@name='email']" position="attributes">
                 <attribute name="required">1</attribute>
             </xpath>
+            <xpath expr="//field[@name='website']" position="attributes">
+                <attribute name="required">0</attribute>
+            </xpath>
         </field>
     </record>
   </data>
