@@ -147,6 +147,7 @@
         </xpath>
       </field>
     </record>
+    <!--  AGREGAMOS LA FECHA DE LEAD EN EL LEAD -->
     <record model="ir.ui.view" id="kanban_new_field">
       <field name="name">New Kanban</field>
       <field name="model">crm.lead</field>
@@ -158,7 +159,6 @@
         </xpath>
       </field>
     </record>
-
     <!--  NUEVOS CAMPOS EN LA VISTA TREE DEL CRM  -->
     <record id="crm_case_tree_view_leads_2" model="ir.ui.view">
         <field name="name">crm.lead.tree.lead</field>
@@ -201,6 +201,28 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='probability']" position="attributes">
                 <attribute name="groups">sales_team.group_sale_manager</attribute>
+            </xpath>
+        </field>
+    </record>
+    <!--  CAMBIAR EL TEXTO DEL BOTON DE LA ACTIVIDA DE UN FLUJO DEL CRM  -->
+    <record id="mail_crm_fields_attrs" model="ir.ui.view">
+        <field name="name">Fields mail</field>
+        <field name="model">mail.activity</field>
+        <field name="inherit_id" ref="mail.mail_activity_view_form_popup"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_done_schedule_next']" position="attributes">
+                <attribute name="string">¡Hecho!, próximo seguimiento</attribute>
+            </xpath>
+        </field>
+    </record>
+    <!-- OBLIGATORIO EL CORREO EN LA FICHA DEL CONTACTO -->
+    <record id="attributes_contacts" model="ir.ui.view">
+        <field name="name">Atributes.contacts</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='email']" position="attributes">
+                <attribute name="required">1</attribute>
             </xpath>
         </field>
     </record>
