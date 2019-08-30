@@ -56,9 +56,9 @@
                         <field name="company_id"
                                 groups="base.group_multi_company"
                                 options="{'no_create': True}"/>
-                        <!--<field name="campaign_id" />-->
+                        <field name="campaign_id"/>
                         <field name="medium_id"/>
-                        <!--<field name="source_id"/>-->
+                        <field name="source_id"/>
                         <field name="referred"/>
                     </group>
                     <group>
@@ -221,8 +221,8 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='email']" position="attributes">
-                <attribute name="required">1</attribute>
+            <xpath expr="//field[@name='type']" position="before">
+                <field name="nombre_comercial" string="Nombre comercial"/>
             </xpath>
         </field>
     </record>
