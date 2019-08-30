@@ -215,7 +215,7 @@
             </xpath>
         </field>
     </record>
-    <!-- OBLIGATORIO EL CORREO EN LA FICHA DEL CONTACTO -->
+    <!-- OBLIGATORIO EL CORREO EN LA FICHA DEL CONTACTO 
     <record id="attributes_contacts" model="ir.ui.view">
         <field name="name">Atributes.contacts</field>
         <field name="model">res.partner</field>
@@ -225,6 +225,6 @@
                 <field name="nombre_comercial" string="Nombre comercial"/>
             </xpath>
         </field>
-    </record>
+    </record>-->
   </data>
 </odoo>

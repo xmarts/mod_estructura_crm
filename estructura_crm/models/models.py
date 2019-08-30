@@ -8,4 +8,4 @@ class ResPartner(models.Model):
 
 	company_type = fields.Selection([('person','Persona Fisica'),('company','Persona Moral')])
 	
-	nombre_comercial = fields.Char()	
+	'''nombre_comercial = fields.Char()	'''
