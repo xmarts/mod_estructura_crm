@@ -35,7 +35,7 @@
                         <field name="partner_id" string="Customer"
                                 widget="res_partner_many2one"
                                 context="{'default_name': contact_name, 'default_street': street, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_function': function, 'default_phone': phone, 'default_mobile': mobile, 'default_email': email_from, 'default_user_id': user_id, 'default_team_id': team_id, 'default_website': website, 'show_vat': True}"
-                                groups="base.group_no_one"/>
+                                groups="base.group_no_one" string="Razón social"/>
                         <field name="partner_name" string="Empresa"/>
                         <label for="contact_name"/>
                         <div class="o_row">
