@@ -56,7 +56,7 @@
                                 groups="base.group_multi_company"
                                 options="{'no_create': True}"/>
                         <field name="campaign_id" invisible="1"/>
-                        <field name="medium_id"/>
+                        <field name="medium_id" required="1"/>
                         <field name="source_id" invisible="1"/>
                         <field name="referred"/>
                     </group>
