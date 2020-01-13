@@ -35,6 +35,7 @@
                         <field name="partner_id" string="Razón social"
                                 widget="res_partner_many2one"
                                 context="{'default_name': contact_name, 'default_street': street, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_function': function, 'default_phone': phone, 'default_mobile': mobile, 'default_email': email_from, 'default_user_id': user_id, 'default_team_id': team_id, 'default_website': website, 'show_vat': True}"/>
+                      
                         <field name="partner_name" string="Empresa"/>
                         <label for="contact_name"/>
                         <div class="o_row">
@@ -48,14 +49,14 @@
                                 aria-label="Blacklisted" attrs="{'invisible': [('is_blacklisted', '=', False)]}" groups="base.group_user"></i>
                             <field name="email_from" widget="email"/>
                         </div>
-                        <field name="function" invisible="1"/>
+                        <field name="function"/>
                         <field name="phone" widget="phone"/>
                         <field name="mobile"/>
                         <separator string="Tracking"/>
                         <field name="company_id"
                                 groups="base.group_multi_company"
                                 options="{'no_create': True}"/>
-                        <field name="campaign_id" invisible="1"/>
+                        <field name="campaign_id"/>
                         <field name="medium_id" required="1"/>
                         <field name="source_id" invisible="1"/>
                         <field name="referred"/>
@@ -132,6 +133,7 @@
         </xpath>
       </field>
     </record>
+
     
     <!--NUEVO NOMBRE DE OPORTUNIDAD-->
     <record model="ir.ui.view" id="new_name_oppor">
@@ -143,6 +145,12 @@
           <div class="oe_title">
             <label for="name" string="Proyecto" class="oe_edit_only"/>
           </div>
+        </xpath>
+          <xpath expr="//field[@name='date_deadline']" position="after">
+          <field name="date_now" required="1"/>
+        </xpath>
+        <xpath expr="//field[@name='partner_address_phone']" position="after">
+          <field name="partner_address_mobile" attrs="{'invisible': [('partner_address_mobile', '==', False)]}" readonly="1" widget="mobile" string="Mobile"/>
         </xpath>
       </field>
     </record>
@@ -228,7 +236,7 @@
                             <field name="mobile"/>
                         </group>
                         <group string="Marketing">
-                            <field name="campaign_id" invisible="1"/>
+                            <field name="campaign_id" />
                             <field name="medium_id" />
                             <field name="source_id" invisible="1"/>
                         </group>
