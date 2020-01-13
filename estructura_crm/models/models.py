@@ -8,3 +8,8 @@ class ResPartner(models.Model):
 
 	company_type = fields.Selection([('person','Persona Fisica'),('company','Persona Moral')])
 	
+class AddDateCrm(models.Model):
+	_inherit = "crm.lead"
+
+	date_now = fields.Datetime(string="Fecha de lead")
+	partner_address_mobile = fields.Char('Partner Contact Mobile', related='partner_id.mobile', readonly=True)

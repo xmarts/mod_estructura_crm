@@ -35,7 +35,7 @@
                         <field name="partner_id" string="Razón social"
                                 widget="res_partner_many2one"
                                 context="{'default_name': contact_name, 'default_street': street, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_function': function, 'default_phone': phone, 'default_mobile': mobile, 'default_email': email_from, 'default_user_id': user_id, 'default_team_id': team_id, 'default_website': website, 'show_vat': True}"/>
-                      
+                        
                         <field name="partner_name" string="Empresa"/>
                         <label for="contact_name"/>
                         <div class="o_row">
@@ -261,6 +261,33 @@
                 <attribute name="string">¡Hecho!, próximo seguimiento</attribute>
             </xpath>
         </field>
+    </record>
+
+    <record model="ir.ui.view" id="add_date_crm">
+      <field name="name">add_date_crm</field>
+      <field name="model">crm.lead</field>
+      <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='date_deadline']" position="after">
+          <field name="date_now" required="1"/>
+        </xpath>
+        <xpath expr="//field[@name='partner_address_phone']" position="after">
+          <field name="partner_address_mobile" attrs="{'invisible': [('partner_address_mobile', '==', False)]}" readonly="1" widget="mobile" string="Mobile"/>
+        </xpath>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="add_date_crm_iniciativa">
+      <field name="name">add_date_crm_iniciativa</field>
+      <field name="model">crm.lead</field>
+      <field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='partner_id']" position="before">
+          <field name="date_now" required="1"/>
+          
+        </xpath>
+        
+         
+      </field>
     </record>
   </data>
 </odoo>
