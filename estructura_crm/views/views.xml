@@ -40,7 +40,7 @@
                         <label for="contact_name"/>
                         <div class="o_row">
                             <field name="contact_name"/>
-                            <field name="title" placeholder="Title" domain="[]" options='{"no_open": True}'/>
+                            <field name="title" invisible="1"/>
                         </div>
                         <field name="is_blacklisted" invisible="1"/>
                         <label for="email_from" class="oe_inline"/>
