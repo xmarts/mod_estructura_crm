@@ -13,3 +13,4 @@ class AddDateCrm(models.Model):
 
 	date_now = fields.Datetime(string="Fecha de lead")
 	partner_address_mobile = fields.Char('Partner Contact Mobile', related='partner_id.mobile', readonly=True)
+	phone = fields.Char('Phone', track_visibility='onchange',size=10, track_sequence=5)
