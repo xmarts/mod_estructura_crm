@@ -51,7 +51,7 @@
                         </div>
                         <field name="function"/>
                         <field name="phone" widget="phone"/>
-                        <field name="mobile"/>
+                        <field name="mobile" widget="phone"/>
                         <separator string="Tracking"/>
                         <field name="company_id"
                                 groups="base.group_multi_company"
@@ -234,7 +234,7 @@
                                 <field name="title" placeholder="Title" domain="[]" options='{"no_open": True}'/>
                             </div>
                             <field name="function"/>
-                            <field name="mobile"/>
+                            <field name="mobile" widget="phone"/>
                         </group>
                         <group string="Marketing">
                             <field name="campaign_id" />
