@@ -4,7 +4,7 @@
     <record model="ir.ui.view" id="estructura_crm_mod">
       <field name="name">estructura_crm</field>
       <field name="model">crm.lead</field>
-      <field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
+      <field name="inherit_id" ref="crm.crm_lead_view_form"/>
       <field name="arch" type="xml">
         <xpath expr="//form[1]" position="replace">
           <form string="Leads Form">
@@ -131,42 +131,40 @@
                 </group>
             </page>
         </xpath>
-      </field>
-    </record>
 
-    
-    <!--NUEVO NOMBRE DE OPORTUNIDAD-->
-    <record model="ir.ui.view" id="new_name_oppor">
-      <field name="name">New name</field>
-      <field name="model">crm.lead</field>
-      <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
-      <field name="arch" type="xml">
-        <xpath expr="//form[1]/sheet[1]/div[hasclass('oe_title')]/label[1]" position="replace">
+        <xpath expr="//field[@name='partner_id']" position="before">
+          <field name="date_now" required="1"/>
+        </xpath>
+
+        <!--NUEVO NOMBRE DE OPORTUNIDAD ESTO IBA EN LA VOSTA DE OPORTNIDAD PERO V15 NO TRAE ESA VISTA-->
+        <!-- <xpath expr="//form[1]/sheet[1]/div[hasclass('oe_title')]/label[1]" position="replace">
           <div class="oe_title">
             <label for="name" string="Proyecto" class="oe_edit_only"/>
           </div>
         </xpath>
-          <xpath expr="//field[@name='date_deadline']" position="after">
+        <xpath expr="//field[@name='date_closed']" position="before">
           <field name="date_now" required="1"/>
-        </xpath>
-        <xpath expr="//field[@name='partner_address_phone']" position="after">
+        </xpath> -->
+        <!-- <xpath expr="//field[@name='partner_address_phone']" position="after">
           <field name="partner_address_mobile" attrs="{'invisible': [('partner_address_mobile', '==', False)]}" readonly="1" widget="mobile" string="Mobile"/>
-        </xpath>
-         
+        </xpath> -->
       </field>
     </record>
+
     <!--  AGREGAMOS LA FECHA DE LEAD EN EL LEAD -->
     <record model="ir.ui.view" id="kanban_new_field">
       <field name="name">New Kanban</field>
       <field name="model">crm.lead</field>
       <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
       <field name="arch" type="xml">
-        <xpath expr="//kanban[1]/templates[1]/t[1]/div[1]/div[2]/div[1]/strong[1]/field[@name='name']" position="after">
+        <xpath expr="//field[@name='name']" position="after">
             <br/>
             <field name="date_now"/>
         </xpath>
       </field>
     </record>
+
+
     <!--  NUEVOS CAMPOS EN LA VISTA TREE DEL CRM  -->
     <record id="crm_case_tree_view_leads_2" model="ir.ui.view">
         <field name="name">crm.lead.tree.lead</field>
@@ -201,8 +199,21 @@
             </xpath>
         </field>
     </record>
+
+    <!--  CAMBIAR EL TEXTO DEL BOTON DE LA ACTIVIDA DE UN FLUJO DEL CRM  -->
+    <record id="mail_crm_fields_attrs" model="ir.ui.view">
+        <field name="name">Fields mail</field>
+        <field name="model">mail.activity</field>
+        <field name="inherit_id" ref="mail.mail_activity_view_form_popup"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_done_schedule_next']" position="attributes">
+                <attribute name="string">¡Hecho!, próximo seguimiento</attribute>
+            </xpath>
+        </field>
+    </record>
+
     <!-- AGREMAMOS UN ATRIBUTO DE TIPO GROUPS A PROBABILITY EN LA FICHA DE OPORTUNIDAD, PARA QUE SOLO PUEDA SER VISIBLE POR EL RESPOSABLE DE VENTAS  -->
-    <record id="probability_field" model="ir.ui.view">
+   <!--  <record id="probability_field" model="ir.ui.view">
         <field name="name">crm.lead.probabi</field>
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
@@ -251,32 +262,7 @@
                 </page>
             </xpath>
         </field>
-    </record>
-    <!--  CAMBIAR EL TEXTO DEL BOTON DE LA ACTIVIDA DE UN FLUJO DEL CRM  -->
-    <record id="mail_crm_fields_attrs" model="ir.ui.view">
-        <field name="name">Fields mail</field>
-        <field name="model">mail.activity</field>
-        <field name="inherit_id" ref="mail.mail_activity_view_form_popup"/>
-        <field name="arch" type="xml">
-            <xpath expr="//button[@name='action_done_schedule_next']" position="attributes">
-                <attribute name="string">¡Hecho!, próximo seguimiento</attribute>
-            </xpath>
-        </field>
-    </record>
+    </record> -->
 
-   
-    <record model="ir.ui.view" id="add_date_crm_iniciativa">
-      <field name="name">add_date_crm_iniciativa</field>
-      <field name="model">crm.lead</field>
-      <field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
-      <field name="arch" type="xml">
-        <xpath expr="//field[@name='partner_id']" position="before">
-          <field name="date_now" required="1"/>
-          
-        </xpath>
-        
-         
-      </field>
-    </record>
   </data>
 </odoo>
