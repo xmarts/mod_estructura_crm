@@ -1,110 +1,40 @@
 <odoo>
   <data>
     <!--NUEVO ESTRUCTURA DEL CRM LEAD-->
-    <record model="ir.ui.view" id="estructura_crm_mod">
-      <field name="name">estructura_crm</field>
-      <field name="model">crm.lead</field>
-      <field name="inherit_id" ref="crm.crm_lead_view_form"/>
-      <field name="arch" type="xml">
-        <xpath expr="//form[1]" position="replace">
-          <form class="o_lead_opportunity_form" js_class="crm_form">
-            <header>
-                <button name="action_set_won_rainbowman" string="Won"
-                    type="object" class="oe_highlight" data-hotkey="w" title="Mark as won"
-                    attrs="{'invisible': ['|','|', ('active','=',False), ('probability', '=', 100), ('type', '=', 'lead')]}"/>
-                <button name="%(crm.crm_lead_lost_action)d" string="Lost" data-hotkey="l" title="Mark as lost"
-                    type="action" context="{'default_lead_id': active_id}" attrs="{'invisible': ['|', ('type', '=', 'lead'),('active', '=', False),('probability', '&lt;', 100)]}"/>
-                <button name="%(crm.action_crm_lead2opportunity_partner)d" string="Convert to Opportunity" type="action" help="Convert to Opportunity"
-                    class="oe_highlight" attrs="{'invisible': ['|', ('type', '=', 'opportunity'), ('active', '=', False)]}" data-hotkey="v"/>
-                <button name="toggle_active" string="Restore" type="object" data-hotkey="z"
-                    attrs="{'invisible': ['|', ('probability', '&gt;', 0), ('active', '=', True)]}"/>
-                <button name="action_set_lost" string="Lost" type="object" data-hotkey="l" title="Mark as lost"
-                    attrs="{'invisible': ['|', ('type', '=', 'opportunity'), '&amp;', ('probability', '=', 0), ('active', '=', False)]}"/>
-                <field name="stage_id" widget="statusbar"
-                    options="{'clickable': '1', 'fold_field': 'fold'}"
-                    domain="['|', ('team_id', '=', team_id), ('team_id', '=', False)]"
-                    attrs="{'invisible': ['|', ('active', '=', False), ('type', '=', 'lead')]}"/>
-            </header>
-            <sheet>
-                <field name="active" invisible="1"/>
-                <div class="oe_button_box" name="button_box">
-                </div>
-                <div class="badge-pill badge-danger float-right" attrs="{'invisible': ['|', ('probability', '&gt;', 0), ('active', '=', True)]}">Lost</div>
-                <div class="badge-pill badge-success float-right" attrs="{'invisible': [('probability', '&lt;', 100)]}">Won</div>
-                <div class="oe_title">
-                    <label for="name" class="oe_edit_only" string="Proyecto"/>
-                    <h1><field name="name" placeholder="Describe the lead..."/></h1>
-                </div>
-                <group>
-                  <group>
-                        <field name="partner_id" string="Razón social"
-                                widget="res_partner_many2one"
-                                context="{'default_name': contact_name, 'default_street': street, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_function': function, 'default_phone': phone, 'default_mobile': mobile, 'default_email': email_from, 'default_user_id': user_id, 'default_team_id': team_id, 'default_website': website, 'show_vat': True}"/>
-                        
-                        <field name="partner_name" string="Empresa"/>
-                        <label for="contact_name"/>
-                        <div class="o_row">
-                            <field name="contact_name"/>
-                            <field name="title" invisible="1"/>
-                        </div>
-                        <field name="is_blacklisted" invisible="1"/>
-                        <label for="email_from" class="oe_inline"/>
-                        <div class="o_row o_row_readonly">
-                            <i class="fa fa-ban" style="color: red;" role="img" title="This email is blacklisted for mass mailing"
-                                aria-label="Blacklisted" attrs="{'invisible': [('is_blacklisted', '=', False)]}" groups="base.group_user"></i>
-                            <field name="email_from" widget="email"/>
-                        </div>
-                        <field name="function"/>
-                        <field name="phone" widget="phone"/>
-                        <field name="mobile" widget="phone"/>
-                        <separator string="Tracking"/>
+        <record model="ir.ui.view" id="estructura_crm_mod">
+            <field name="name">estructura_crm</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+
+                <field name="partner_id" position="attributes">
+                    <attribute name="string">Razón social</attribute>
+                </field> 
+
+                <xpath expr="//div[@class='oe_title']" position="replace">
+                    <div class="oe_title"> 
+                        <label for="name" class="oe_edit_only" string="Proyecto"/>
+                        <h1><field name="name" placeholder="Describe the lead..."/></h1>
+                    </div>
+                </xpath>
+
+                <xpath expr="//group[@name='lead_priority']" position="before">
+                    <group string="Tracking" name="categorization">
                         <field name="company_id"
-                                groups="base.group_multi_company"
-                                options="{'no_create': True}"/>
-                        <field name="campaign_id"/>
-                        <field name="medium_id" required="1"/>
-                        <field name="source_id" invisible="1"/>
+                            groups="base.group_multi_company"
+                            options="{'no_create': True}"/>
+                        <field name="campaign_id" />
+                        <field name="medium_id"/>
+                        <field name="source_id"/>
                         <field name="referred"/>
                     </group>
-                    <group>
-                        <!-- Preload all the partner's information -->
-                        <label for="street" string="Address"/>
-                        <div class="o_address_format">
-                            <field name="street" placeholder="Street..." class="o_address_street"/>
-                            <field name="street2" placeholder="Street 2..." class="o_address_street"/>
-                            <field name="city" placeholder="City" class="o_address_city"/>
-                            <field name="state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
-                            <field name="zip" placeholder="ZIP" class="o_address_zip"/>
-                            <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
-                        </div>
-                        <field name="website" widget="url" placeholder="e.g. www.odoo.com"/>
-                        <!--CAMBIO-->
-                        <field name="user_id" domain="[('share', '=', False)]"
-                            context="{'default_groups_ref': ['base.group_user', 'base.group_partner_manager', 'sales_team.group_sale_salesman_all_leads'], 'team_id': team_id}"/>
-                        <field name="team_id" widget="selection" domain="[('use_leads','=',True)]"/>
-                        <field name="type" invisible="1"/>
-                        <!--CAMBIO-->
-                        <field name="priority" widget="priority"/>
-                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
-                    </group>
-                </group>
-                <notebook>
-                    <page string="Internal Notes">
-                        <field name="description"/>
-                    </page>
+                </xpath>
+
+                <xpath expr="//page[@name='extra']" position="replace">
                     <page name="extra" string="Extra Info">
                         <group>
                             <group string="Email" groups="base.group_no_one">
                                 <field name="message_bounce" readonly="1"/>
-                            </group>
-                            <group string="Tracking" groups="base.group_multi_company,base.group_no_one" name="categorization">
-                                <field name="company_id"
-                                    groups="base.group_multi_company"
-                                    options="{'no_create': True}"/>
-                                <field name="campaign_id" />
-                                <field name="medium_id"/>
-                                <field name="source_id"/>
-                                <field name="referred"/>
                             </group>
                             <group string="Analysis" groups="base.group_no_one">
                                 <field name="date_open"/>
@@ -113,48 +43,13 @@
                             </group>
                         </group>
                     </page>
-                </notebook>
-            </sheet>
-            <div class="oe_chatter">
-                <field name="message_follower_ids" widget="mail_followers"/>
-                <field name="activity_ids" widget="mail_activity"/>
-                <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
-            </div>
-        </form>
-        </xpath>
-        <xpath expr="//page[@name='extra']" position="replace">
-            <page name="extra" string="Extra Info">
-                <group>
-                    <group string="Email" groups="base.group_no_one">
-                        <field name="message_bounce" readonly="1"/>
-                    </group>
-                    <group string="Analysis" groups="base.group_no_one">
-                        <field name="date_open"/>
-                        <field name="date_closed"/>
-                        <field name="probability"/>
-                    </group>
-                </group>
-            </page>
-        </xpath>
+                </xpath>
 
-        <xpath expr="//field[@name='partner_id']" position="before">
-          <field name="date_now" required="1"/>
-        </xpath>
-
-        <!--NUEVO NOMBRE DE OPORTUNIDAD ESTO IBA EN LA VOSTA DE OPORTNIDAD PERO V15 NO TRAE ESA VISTA-->
-        <!-- <xpath expr="//form[1]/sheet[1]/div[hasclass('oe_title')]/label[1]" position="replace">
-          <div class="oe_title">
-            <label for="name" string="Proyecto" class="oe_edit_only"/>
-          </div>
-        </xpath>
-        <xpath expr="//field[@name='date_closed']" position="before">
-          <field name="date_now" required="1"/>
-        </xpath> -->
-        <!-- <xpath expr="//field[@name='partner_address_phone']" position="after">
-          <field name="partner_address_mobile" attrs="{'invisible': [('partner_address_mobile', '==', False)]}" readonly="1" widget="mobile" string="Mobile"/>
-        </xpath> -->
-      </field>
-    </record>
+                <xpath expr="//field[@name='partner_id']" position="before">
+                    <field name="date_now" attrs="{'invisible': [('type', '=', 'opportunity')]}" required="1"/>
+                </xpath>
+            </field>
+        </record>
 
     <!--  AGREGAMOS LA FECHA DE LEAD EN EL LEAD -->
     <record model="ir.ui.view" id="kanban_new_field">
@@ -168,7 +63,6 @@
         </xpath>
       </field>
     </record>
-
 
     <!--  NUEVOS CAMPOS EN LA VISTA TREE DEL CRM  -->
     <record id="crm_case_tree_view_leads_2" model="ir.ui.view">
